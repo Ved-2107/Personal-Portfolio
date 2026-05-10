@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #020408;
+  --bg2: #060c12;
+  --bg3: #0a1220;
+  --surface: #0d1a2a;
+  --surface2: #102030;
+  --border: #1a2d45;
+  --border2: #1e3555;
+  --text: #e8f4ff;
+  --text2: #8ab0d0;
+  --text3: #4a7090;
+  --accent: #00d4ff;
+  --accent2: #0088ff;
+  --accent3: #ff6b35;
+  --green: #00ff9d;
+  --purple: #9d4eff;
+  --grad: linear-gradient(135deg, #00d4ff, #0088ff);
+  --grad2: linear-gradient(135deg, #9d4eff, #0088ff);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+::selection { background: rgba(0, 212, 255, 0.2); color: var(--accent); }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+.gradient-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-purple {
+  background: var(--grad2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass {
+  background: rgba(13, 26, 42, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+}
+
+.glow {
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+}
+
+.glow-purple {
+  box-shadow: 0 0 30px rgba(157, 78, 255, 0.15);
+}
+
+/* Noise texture overlay */
+.noise::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-accent to-accent-2 text-black font-bold px-6 py-3 rounded-lg transition-all duration-200 font-heading;
+  }
+  .btn-primary:hover {
+    @apply -translate-y-0.5 shadow-lg;
+    box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);
+  }
+  .btn-outline {
+    @apply bg-transparent border border-border-2 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 font-heading;
+  }
+  .btn-outline:hover {
+    @apply border-accent text-accent;
+  }
+  .section-tag {
+    @apply font-mono text-xs text-accent uppercase tracking-widest mb-3 block;
+  }
+  .section-title {
+    @apply font-heading font-extrabold leading-none;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  .card {
+    @apply bg-surface border border-border rounded-2xl transition-all duration-300;
+  }
+  .card:hover {
+    @apply border-accent/30;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ── Extra utilities used in routed pages ── */
+.no-underline { text-decoration: none !important; }
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Accent bg utility used in nav active state */
+.bg-accent\/8  { background: rgba(0,212,255,0.08); }
+.bg-accent\/5  { background: rgba(0,212,255,0.05); }
+.bg-accent2\/10 { background: rgba(0,136,255,0.10); }
+.bg-accent2\/8  { background: rgba(0,136,255,0.08); }
+
+/* Site-wide footer */
+.site-footer {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text3);
+}
+.site-footer a { color: var(--accent); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
