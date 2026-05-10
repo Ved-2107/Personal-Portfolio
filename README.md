@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ved Bajaj — AI-Powered Developer Portfolio
 
 <div align="center">
@@ -341,3 +342,6 @@ MIT © [Ved Bajaj](https://github.com/vedbajaj)
 <div align="center">
 Built with ❤️ by <strong>Ved Bajaj</strong> — COEP Technological University, Pune
 </div>
+=======
+# Personal-Portfolio
+>>>>>>> 4685052eedcb35be1bd9c85c5ab08621c608a2e2
