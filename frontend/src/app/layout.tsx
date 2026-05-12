@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Syne, DM_Sans, JetBrains_Mono } from 'next/font/google';
 import { AuthProvider } from '@/context/AuthContext';
+import AuthGuard from '@/components/auth/AuthGuard';
 import { Toaster } from 'react-hot-toast';
 import '@/styles/globals.css';
 import LiveVisitorBadge from '@/components/ui/LiveVisitorBadge';
@@ -32,20 +33,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${syne.variable} ${dmSans.variable} ${jetbrains.variable}`}>
       <body>
         <AuthProvider>
-          {children}
-          <LiveVisitorBadge />
-          <Toaster
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                background: '#0d1a2a', color: '#e8f4ff',
-                border: '1px solid #1a2d45',
-                fontFamily: 'DM Sans, sans-serif', fontSize: '0.875rem',
-              },
-              success: { iconTheme: { primary: '#00ff9d', secondary: '#000' } },
-              error:   { iconTheme: { primary: '#ff6b35', secondary: '#000' } },
-            }}
-          />
+          <AuthGuard>
+            {children}
+            <LiveVisitorBadge />
+            <Toaster
+              position="bottom-right"
+              toastOptions={{
+                style: {
+                  background: '#0d1a2a', color: '#e8f4ff',
+                  border: '1px solid #1a2d45',
+                  fontFamily: 'DM Sans, sans-serif', fontSize: '0.875rem',
+                },
+                success: { iconTheme: { primary: '#00ff9d', secondary: '#000' } },
+                error:   { iconTheme: { primary: '#ff6b35', secondary: '#000' } },
+              }}
+            />
+          </AuthGuard>
         </AuthProvider>
       </body>
     </html>

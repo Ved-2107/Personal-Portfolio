@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 const NAV_LINKS = [
   { href: '/about',      label: 'About'      },
@@ -18,6 +19,8 @@ export default function Navbar() {
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { logout, isAuthenticated } = useAuth();
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
@@ -26,6 +29,11 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
+
+  const handleLogout = async () => {
+    await logout();
+    router.push('/login');
+  };
 
   return (
     <>
@@ -71,6 +79,11 @@ export default function Navbar() {
             <Link href="/contact" className="hidden sm:inline-block btn-primary text-sm px-5 py-2 no-underline">
               Hire Me
             </Link>
+            {isAuthenticated && (
+              <button onClick={handleLogout} className="hidden sm:inline-block font-mono text-xs text-text3 hover:text-accent transition-colors ml-2 bg-transparent border-0 cursor-pointer">
+                Logout
+              </button>
+            )}
             <button
               onClick={() => setMobileOpen(o => !o)}
               className="lg:hidden flex flex-col gap-1.5 p-2 bg-transparent border-0 cursor-pointer"
@@ -130,6 +143,13 @@ export default function Navbar() {
                 Hire Me
               </Link>
             </motion.div>
+            {isAuthenticated && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+                <button onClick={handleLogout} className="font-mono text-sm text-text3 hover:text-accent mt-4 bg-transparent border-0 cursor-pointer">
+                  Logout
+                </button>
+              </motion.div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
